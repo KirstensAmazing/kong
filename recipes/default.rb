@@ -26,7 +26,7 @@
 end
 
 git "/opt/kong" do
-  repository "https://github.com/rcbops/kong"
+  repository node["kong"]["git_repo"] #"https://github.com/rcbops/kong"
   reference "master"
   action "checkout"
 end
@@ -41,7 +41,7 @@ end
 
 # Download tar
 remote_file "/#{Chef::Config[:file_cache_path]}/images/cirros-0.3.1-x86_64-uec.tar.gz" do
-  source "http://build.monkeypuppetlabs.com/cirros-0.3.1-x86_64-uec.tar.gz"
+  source node["kong"]["tar_location"] #"http://build.monkeypuppetlabs.com/cirros-0.3.1-x86_64-uec.tar.gz"
 end
 
 # Extract tar
@@ -90,7 +90,7 @@ keystone_admin_user = keystone["admin_user"]
 keystone_admin_password = keystone["users"][keystone_admin_user]["password"]
 keystone_admin_tenant = keystone["users"]\
   [keystone_admin_user]["default_tenant"]
-swift_store_auth_address = "http://swiftendpoint"
+swift_store_auth_address = node["kong"]["swiftstore_auth_address"] #"http://swiftendpoint"
 swift_store_user = "swift_store_user"
 swift_store_tenant = "swift_store_tenant"
 swift_store_key = "swift_store_key"
